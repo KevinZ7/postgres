@@ -32,7 +32,7 @@ function formatDate(date) {
 }
 
 console.log('Searching....')
-knex.select('*').from('famous_people').where('first_name',`${process.argv[2]}`).orWhere('last_name',`${process.argv[2]}`).asCallback((err,result) => {
+knex.select().from('famous_people').where(knex.raw('?? = ?',['first_name',`${process.argv[2]}`])).orWhere(knex.raw('?? = ?',['last_name',`${process.argv[2]}`])).asCallback((err,result) => {
   if (err) return console.error(err);
   console.log(`Found ${result.length} person(s) by the name '${process.argv[2]}':`)
   result.forEach(displayInfo);
